@@ -2,3 +2,5 @@
 app/config/*
 notes.txt
 node_modules
+app/email.js
+email.js
