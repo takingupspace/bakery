@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<!--
+	Twenty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Sign in / Sign Up</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="contact is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<!-- TODO: FIX REFERENCES TO OTHER PAGES. USE INDEX.HTML AS A REFERENCE.-->
+				<header id="header">
+					<h1 id="logo"><a href="index.html">Millsbury <span>dough girl</span></a></h1>
+					<nav id="nav">
+						<ul>
+							<!--<li class="submenu">
+								<a href="#">Reservations</a>
+								<ul>
+									<li><a href="left-sidebar.html">My Reservations</a></li>
+								</ul>
+							</li>-->
+							<li><a href="signup.html" class="button primary">Home</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<article id="main">
+
+					<!-- One -->
+						<section class="wrapper style4 special container medium">
+
+							<!-- Content -->
+								<!--Form for Login-->
+								<div style="width:50%; float:right;" class="content">
+									<h3>Login</h3>
+									<form action="http://birdsuphotels.com:3001/login" id="loginPOST">
+										<div class="row gtr-50">
+
+											<div class="col-12">
+												<input type="text" name="userName" placeholder="Email" />
+											</div>
+											<!--CHANGED input type to password to hide password.-->
+											<div class="col-12">
+												<input type="password" name="password" placeholder="Password" />
+											</div>
+										
+											<div class="col-12">
+												<ul class="buttons">
+													<li><input type="submit" class="special" value="Login" /></li>
+												</ul>
+											</div>
+										</div>
+									</form>
+								</div>
+
+								<!--Form for Sign Up-->
+								<div style="width:50%;" class="content">
+									<h3>Sign Up</h3>
+									<form action="http://birdsuphotels.com:3001/signup" id="customerPOST">
+										<div style="margin-right:5%;" class="row gtr-50">
+											<div class="col-6 col-12-mobile">
+												<input type="text" name="firstName" placeholder="First Name" />
+											</div>
+											<div class="col-6 col-12-mobile">
+												<input type="text" name="lastName" placeholder="Last Name" />
+											</div>
+											<div class="col-12">
+												<input type="text" name="userName" placeholder="Email" />
+											</div>
+											<!--CHANGED input type to password to hide password.-->
+											<div class="col-12">
+												<input type="password" name="password" placeholder="Password" />
+											</div>
+									
+											<div class="col-12">
+												<ul class="buttons">
+													<li><input type="submit" class="special" value="Sign Up" /></li>
+												</ul>
+											</div>
+										</div>
+									</form>
+								</div>
+
+
+						</section>
+
+				</article>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="copyright">
+						<li>&copy;</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollgress.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+			
+			<!--Script for getting and submitting POST information from sign up form.-->
+			<script>
+				$("#customerPOST").submit(function( event ){
+					event.preventDefault();
+					var $form = $ ( this ),
+					firstName = $form.find( "input[name='firstName']" ).val(),
+					lastName = $form.find( "input[name='lastName']" ).val(),
+					userName = $form.find( "input[name='userName']" ).val(),
+					password = $form.find( "input[name='password']" ).val(),
+					isAdmin = 0,
+					url = $form.attr( "action")
+	
+					var posting = $.post(url, {
+						firstName : firstName,
+						lastName : lastName,
+						userName : userName,
+						password : password,
+						isAdmin : isAdmin
+					});
+					posting.done(function( data ) {
+						
+						// on the server, we use send to send some JSON data into this function
+						// the key is "message" and the value is whatever we wrote on the server-side
+						// which is a message notifying the user whether they were successfully added
+						// to the database or not
+						alert(data.message)
+					});
+				});
+			</script>
+
+
+			<!--Script for getting and submitting POST information from login form.-->
+			<script>
+				$("#loginPOST").submit(function(event){
+					event.preventDefault();
+					var $form = $(this)
+					userName = $form.find("input[name='userName']").val(),
+					password = $form.find("input[name='password']").val(),
+					url = $form.attr("action")
+
+					var login = $.post(url, {
+						userName : userName,
+						password : password
+					});
+					login.done(function (data){
+						/*
+						Where message is a notification stating that a token was issued.
+						Where data is the session id that was generated on login. 
+						Where userName is the email/username used to login. 
+						*/
+
+						alert(data.message) //prints message from response
+
+						//max-age is in seconds, so we set the cookie to expire in n seconds
+						document.cookie = `${userName}; max-age=300`
+						//redirect after cookie assignment.  
+						window.open("index.html", "_self");
+					});
+				});
+			</script>
+	</body>
+</html>
