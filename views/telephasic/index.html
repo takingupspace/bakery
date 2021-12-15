@@ -6,12 +6,13 @@
 -->
 <html>
 	<head>
-		<title>Telephasic by HTML5 UP</title>
+		<title>Millsbury Dough Girl</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--import for the SMTP javascript library below-->
 		<script src="https://smtpjs.com/v3/smtp.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -165,7 +166,7 @@
 						</header>
 						<div class="row">
 							<section class="col-6 col-12-narrower">
-								<form method="post">
+								<form action="http://localhost:3001/sendEmail" id="sendEmailForm">
 									<div class="row gtr-50">
 										<div class="col-6 col-12-mobile">
 											<input name="name" placeholder="Name" type="text" />
@@ -178,12 +179,31 @@
 										</div>
 										<div class="col-12">
 											<ul class="actions">
-												<li><input type="button" value="Send Message" onclick="sendEmail()" /></li>
+												<li><input type="submit" value="Send Message"/></li>
 												<li><input type="reset" value="Clear form" /></li>
 											</ul>
 										</div>
 									</div>
 								</form>
+								<script>
+									$('#sendEmailForm').submit(function(event){
+										event.preventDefault();
+										var $form = $(this)
+										clientName = $form.find("input[name='name']").val(),
+										clientEmail = $form.find("input[name='email']").val(),
+										clientMessage = $form.find("textarea[name='message']").val(),
+										url = $form.attr("action")
+
+									var postingIt = $.post(url, {
+										name : clientName,
+										email : clientEmail,
+										message : clientMessage
+									})
+									postingIt.done(function(data){
+										alert("Your message was successfully sent to Millsbury Dough Girl!")
+									})
+								})
+								</script>
 							</section>
 							<section class="col-6 col-12-narrower">
 								<div class="row gtr-0">
