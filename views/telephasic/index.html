@@ -10,6 +10,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--import for the SMTP javascript library below-->
+		<script src="https://smtpjs.com/v3/smtp.js"></script>
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -163,7 +165,7 @@
 						</header>
 						<div class="row">
 							<section class="col-6 col-12-narrower">
-								<form method="post" action="#">
+								<form method="post">
 									<div class="row gtr-50">
 										<div class="col-6 col-12-mobile">
 											<input name="name" placeholder="Name" type="text" />
@@ -176,7 +178,7 @@
 										</div>
 										<div class="col-12">
 											<ul class="actions">
-												<li><input type="submit" value="Send Message" /></li>
+												<li><input type="button" value="Send Message" onclick="sendEmail()" /></li>
 												<li><input type="reset" value="Clear form" /></li>
 											</ul>
 										</div>

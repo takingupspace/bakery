@@ -2,3 +2,7 @@
 app/config/*
 notes.txt
 node_modules
+app/email.js
+email.js
+bakery/app/email.js
+app/email
