@@ -29,6 +29,7 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/email.routes.js")(app);
+require('./app/routes/bakeitems.routes.js')(app)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3001;

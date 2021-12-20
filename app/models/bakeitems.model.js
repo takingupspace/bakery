@@ -18,3 +18,5 @@ BakeItems.showAll = (req, result) => {
         }
     })
 }
+
+module.exports = BakeItems;
