@@ -61,10 +61,6 @@
 										}
 									</script>
 								</header>
-								<p>
-									This page is in testing at the moment. I want to add a filter with an apply button that will
-									allow the user to select a category and display the dynamic contents of baked goods for that category.
-								</p>
 								<section>
 									<script>
 										$("#showBakedGoods").on("click", function(e) {
@@ -81,19 +77,26 @@
 								}
 							}
 						}
-						
+
 						for(i = 0; i < bakedGood.length; i++){
 						var parentDiv = document.getElementById('showData')
 						var newDiv = document.createElement('div');
+						newDiv.id = "newDiv" + i;
 						parentDiv.appendChild(newDiv);
 
+						newParagraph = document.createElement('p');
+						var text = document.createTextNode(bakedGood[i].description);
+						newParagraph.appendChild(text);
+						document.getElementById(newDiv.id).appendChild(newParagraph);
+
 						var img = new Image();
-						img.src = (bakedGood[0].img_url);
+						img.src = (bakedGood[i].img_url);
 						img.height = 100;
 						img.width = 100;
 						document.getElementById('showData').appendChild(img);
+						linebreak = document.createElement("br");
+						newDiv.appendChild(linebreak);
 						}
-
 						},
 						error:function(result) {
 						  alert('error');
