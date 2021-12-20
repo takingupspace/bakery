@@ -6,10 +6,11 @@
 -->
 <html>
 	<head>
-		<title>Astral by HTML5 UP</title>
+		<title>Millsbury's Dough Girl's Baked Goods</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/alignments.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
@@ -32,8 +33,8 @@
 						<!-- Me -->
 							<article id="home" class="panel intro">
 								<header>
-									<h1>Jane Doe</h1>
-									<p>Senior Astral Projectionist</p>
+									<h1>Baked Goods Search</h1>
+									<p>Click the arrow to the left, to navigate to the category search filter</p>
 								</header>
 								<a href="#work" class="jumplink pic">
 									<span class="arrow icon solid fa-chevron-right"><span>See my work</span></span>
@@ -84,18 +85,21 @@
 						newDiv.id = "newDiv" + i;
 						parentDiv.appendChild(newDiv);
 
-						newParagraph = document.createElement('p');
-						var text = document.createTextNode(bakedGood[i].description);
-						newParagraph.appendChild(text);
-						document.getElementById(newDiv.id).appendChild(newParagraph);
+						newTitle = document.createElement('p');
+						var text = document.createTextNode(bakedGood[i].item_name);
+						newTitle.appendChild(text);
+						document.getElementById(newDiv.id).appendChild(newTitle);
 
 						var img = new Image();
 						img.src = (bakedGood[i].img_url);
 						img.height = 100;
 						img.width = 100;
-						document.getElementById('showData').appendChild(img);
-						linebreak = document.createElement("br");
-						newDiv.appendChild(linebreak);
+						document.getElementById(newDiv.id).appendChild(img);
+
+						newDescription = document.createElement('p');
+						var descText = document.createTextNode(bakedGood[i].description);
+						newDescription.appendChild(descText);
+						document.getElementById(newDiv.id).appendChild(newDescription);
 						}
 						},
 						error:function(result) {
