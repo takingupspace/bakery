@@ -10,6 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -50,7 +51,7 @@
 										<option value="2">Birthdays</option>
 										<option value="3">Cakes</option>
 									</select>
-									<input type="button" value="Apply Filter" onclick="GetSelectedTextValue()" />
+									<input type="button" id='showBakedGoods' value="Apply Filter" onclick="GetSelectedTextValue()" />
 									<script type="text/javascript">
 										function GetSelectedTextValue() {
 											var bakedItemCategory = document.getElementById("bakedCategoryID");
@@ -65,8 +66,57 @@
 									allow the user to select a category and display the dynamic contents of baked goods for that category.
 								</p>
 								<section>
+									<script>
+										$("#showBakedGoods").on("click", function(e) {
+					e.preventDefault();
+					$.ajax({type: "GET",
+						url: "http://localhost:3001/showAll",
+						success:function(customerInfo) { // we linearly push all of the JSON headers into our column array
+							var col = []; // this means that we will iterate through, row by row, populating the table
+						for (var i = 0; i < customerInfo.length; i++) { // for loop creates a 2D array, the outer for loop is for the actual columns
+							for (var key in customerInfo[i]) { // the inner for loop linearly sorts all of that columns data, so all of the returned data for propId, then all of locationName's data for the second iteration and so forth
+								if (col.indexOf(key) === -1) {
+									console.log(key);
+									col.push(key);
+								}
+							}
+						}
+
+
+						var table = document.createElement("table"); // html DOM createElement Method
+
+						var tr = table.insertRow(-1); // all -1 signifies here is that it will append this row to the end 
+													// of the last row, since there isn't one this creates the header data for us
+													// which is just the field names for the data within our database
+
+						for (var i = 0; i < col.length; i++) {
+							var th = document.createElement("th"); // we create a new table element
+							th.innerHTML = col[i]; // we set the content (i.e. the innerHTML) to the current column value in the row
+							tr.appendChild(th); // we then call appendChild to actually place this within our table body
+						}
+
+						for (var i = 0; i < customerInfo.length; i++) { // once we have hit this for loop, we have succesfully iterated through the first row which is our header
+							//so this will effectively be row 2
+							tr = table.insertRow(-1); // again, -1 just makes a new row after the last row, which was row 1
+
+							for (var j = 0; j < col.length; j++) { // so now we're on row 2, this for loop iterates through ALL of a SINGLE property's fields
+								var tabCell = tr.insertCell(-1); // -1 here just appends the current cell data (i.e. locationName's value for cell #2 on the 2nd iteration (the first iteration places propId's value into the first cell))
+								tabCell.innerHTML = customerInfo[i][col[j]]; // in example: customerInfo[propId][col[0]] on the first iteration, then customerInfo[propId][col[1]] on the second iteration
+							}
+						}
+
+						var divContainer = document.getElementById("showData"); // this is the paragraph tag Id from above, which is near the button
+						divContainer.innerHTML = ""; // instantiate inside of container to null
+						divContainer.appendChild(table); // add our table created above to the paragraph
+						},
+						error:function(result) {
+						  alert('error');
+						}
+					});
+				});
+									</script>
 									<div class="row">
-										<div class="col-4 col-6-medium col-12-small">
+										<div class="col-4 col-6-medium col-12-small" id='showData'>
 											<a href="#" class="image fit"><img src="images/pic01.jpg" alt=""></a>
 										</div>
 										<!--<div class="col-4 col-6-medium col-12-small">
