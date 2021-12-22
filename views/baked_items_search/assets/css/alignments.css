@@ -1,0 +1,31 @@
+.main {
+  border: 1px solid #4287f5;
+  height: 180px;
+  width: 500px;
+  position: relative;
+}
+
+.column1 {
+  color: #4287f5;
+  text-align: center;
+}
+
+.column2 {
+  text-align: center;
+}
+
+#bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.text-block {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
