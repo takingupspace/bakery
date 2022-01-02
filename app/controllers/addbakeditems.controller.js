@@ -10,7 +10,7 @@ exports.addItem = (req, res) => {
         }else{
             console.log("Successfully added the baked item to the database");
             res.send({
-                message : "You successfully added this item to the database"
+                message : "You have successfully added " + req.body.item_name + " to the database"
             })
         }
     })

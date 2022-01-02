@@ -8,11 +8,14 @@ const BakedItem = function(item){
 
 BakedItem.createBakedItem = (req, result) => {
     sql.query(`INSERT INTO bake_items (item_name, category, description, img_url)
-    VALUES('${req.item_name}', '${req.category}', '${req.description}', '${req.img_url}')`, (err, res) => {
+    VALUES('${req.body.item_name}', '${req.body.category}', '${req.body.description}', '${req.body.img_url}')`, (err, res) => {
         if(err){
             console.log("SQL error in add baked item model = " + err);
         }else{
+            console.log("the result of sql in add baked item is " + JSON.stringify(res))
             result(null, res);
         }
     })
 }
+
+module.exports = BakedItem
