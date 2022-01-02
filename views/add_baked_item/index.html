@@ -50,6 +50,41 @@
 								</p>
 								<section>
 									<div class="row">
+										<div class="col-6 col-12-medium">
+											<input type="text" name="name" placeholder="Enter Baked Item Name" />
+										</div>
+										<div class="col-6 col-12-medium">
+											<input type="text" name="email" placeholder="Select an image to Add" />
+											<div id="plussign" style="font-size: 5em;">+</div>
+											<input type="file" id="getfile" accept="image/*" style="display:none;">
+											<img id="previewimg" width=300 height=300 />
+											<script>
+												const plusSign = document.querySelector('#plussign');
+												const getFile = document.querySelector('#getfile');
+
+												plusSign.addEventListener('click', function () { getFile.click(); });
+												getFile.addEventListener('change', function () { preview(getFile.files[0]); });
+
+												function preview(file) {
+												const img = document.querySelector('#previewimg');
+												img.classList.add("obj");
+												img.file = file;
+
+												const reader = new FileReader();
+												reader.onload = (function(image) { return function(e) { image.src = e.target.result; }; })(img);
+												reader.readAsDataURL(file);
+												}
+											</script>
+										</div>
+										<div class="col-12">
+											<input type="text" name="subject" placeholder="Enter the Type of Baked Good" />
+										</div>
+										<div class="col-12">
+											<textarea name="message" placeholder="Enter a Description of Baked Item" rows="6"></textarea>
+										</div>
+										<div class="col-12">
+											<input type="submit" value="Add Baked Item" />
+										</div>
 									</div>
 								</section>
 							</article>
