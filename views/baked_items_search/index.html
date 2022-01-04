@@ -46,28 +46,89 @@
 							<article id="work" class="panel">
 								<header>
 									<h2>Work</h2>
-									<select id="bakedCategoryID">
+									<form action="localhost:3001/showCategory" id="bakedCategory">
+									<select id="bakedCategoryID" name='bakedCategorySelect' form='bakedCategory'>
 										<option value="">Select a Category</option>
 										<option value="1">Engagements</option>
 										<option value="2">Birthdays</option>
 										<option value="3">Cakes</option>
 									</select>
-									<input type="button" id='showBakedGoods' value="Apply Filter" onclick="GetSelectedTextValue()" />
-									<script type="text/javascript">
+									<input type="submit" id='showBakedGoods' value="Apply Filter" />
+								</form>
+									<!-- <script type="text/javascript">
 										function GetSelectedTextValue() {
 											var bakedItemCategory = document.getElementById("bakedCategoryID");
 											var selectedText = bakedItemCategory.options[bakedItemCategory.selectedIndex].innerHTML;
 											var selectedValue = bakedItemCategory.value;
 											alert('You selected ' + selectedText + "!");
 										}
-									</script>
+									</script> -->
 								</header>
 								<section>
 									<script>
+										$("#bakedCategory").submit(function(event){
+											// var bakedItemCategory = document.getElementById("bakedCategoryID");
+											// var selectedText = bakedItemCategory.options[bakedItemCategory.selectedIndex].innerHTML;
+											// var selectedValue = bakedItemCategory.value;
+											// alert('selected value is ', bakedItemCategory)
+											event.preventDefault();
+											var $form = $(this),
+											// selectedValue = $form.find('input[name="bakedCategorySelect"]').val(),
+											bakedItemCategory = document.getElementById("bakedCategoryID"),
+											selectedText = bakedItemCategory.options[bakedItemCategory.selectedIndex].innerHTML,
+											selectedValue = bakedItemCategory.value,
+											url = $form.attr("action")
+
+											alert(selectedText)
+											alert(url)
+											
+											var posting = $.post('localhost:3001/showCategory', {
+											category : 'Cakes',
+										});
+
+											posting.done(function(bakedGood){
+												var col = [];
+												for (var i = 0; i < bakedGood.length; i++) {
+													for (var key in bakedGood[i]) {
+														if (col.indexOf(key) === -1) {
+															console.log(key);
+															col.push(key);
+														}
+													}
+												}
+
+												for(i = 0; i < bakedGood.length; i++){
+												var parentDiv = document.getElementById('showData')
+												var newDiv = document.createElement('div');
+												newDiv.id = "newDiv" + i;
+												parentDiv.appendChild(newDiv);
+
+												newTitle = document.createElement('p');
+												var text = document.createTextNode(bakedGood[i].item_name);
+												newTitle.appendChild(text);
+												document.getElementById(newDiv.id).appendChild(newTitle);
+
+												var img = new Image();
+												img.src = (bakedGood[i].img_url);
+												img.height = 100;
+												img.width = 100;
+												document.getElementById(newDiv.id).appendChild(img);
+
+												newDescription = document.createElement('p');
+												var descText = document.createTextNode(bakedGood[i].description);
+												newDescription.appendChild(descText);
+												document.getElementById(newDiv.id).appendChild(newDescription);
+												}
+											})
+
+										})
+									</script>
+									<!-- <script>
 										$("#showBakedGoods").on("click", function(e) {
 					e.preventDefault();
-					$.ajax({type: "GET",
-						url: "http://localhost:3001/showAll",
+					$.ajax({type: "POST",
+						url: "http://localhost:3001/showCategory",
+						category : selectedValue,
 						success:function(bakedGood) {
 							var col = [];
 						for (var i = 0; i < bakedGood.length; i++) {
@@ -107,7 +168,7 @@
 						}
 					});
 				});
-									</script>
+									</script> -->
 									<div class="row" id='showData'>
 										<!--<div class="col-4 col-6-medium col-12-small" id='showData'>
 										</div>-->
