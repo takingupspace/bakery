@@ -5,4 +5,5 @@ module.exports = app => {
 
     // we're going to need to use post since we have to send the filter data
     // i.e. the category that the customer requests, so that we can query
+    app.post("/showCategory", bakedItems.showCategory)
 }

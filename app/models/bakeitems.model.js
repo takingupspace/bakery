@@ -12,8 +12,21 @@ BakeItems.showAll = (req, result) => {
             console.log("err inside showAll-bakeitem model");
             result(err, null);
             return;
-        }else{;
+        }else{
             console.log("baked items are: ", res);
+            result(null, res);
+        }
+    })
+}
+
+BakeItems.showSpecificCategory = (req, result) => {
+    sql.query(`SELECT * FROM bake_items WHERE category = '${req.body.category}'`, (err, res) => {
+        if(err){
+            console.log("err inside showSpecificCategory bake item model");
+            result(err, null);
+            return;
+        }else{
+            console.log("baked items for this category are: ", res);
             result(null, res);
         }
     })
