@@ -17,6 +17,17 @@ app.use(cookieParser())
 
 app.use(flash());
 
+// set our CSP headers on server
+const { expressCspHeader, INLINE, NONE, SELF } = require('express-csp-header');
+// other app.use() options ...
+app.use(expressCspHeader({ 
+    policies: { 
+        'default-src': [expressCspHeader.NONE], 
+        'img-src': [expressCspHeader.SELF], 
+    } 
+})); 
+
+
 // allows us to parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 

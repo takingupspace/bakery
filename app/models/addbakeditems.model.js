@@ -7,6 +7,7 @@ const BakedItem = function(item){
 }
 
 BakedItem.createBakedItem = (req, result) => {
+    console.log("img_url is ", req.body.img_url);
     sql.query(`INSERT INTO bake_items (item_name, category, description, img_url)
     VALUES('${req.body.item_name}', '${req.body.category}', '${req.body.description}', '${req.body.img_url}')`, (err, res) => {
         if(err){
